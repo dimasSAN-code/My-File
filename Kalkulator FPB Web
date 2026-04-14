@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator FPB</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background: #e6e6e6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container{
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 
+                10px 10px 20px #bcbcbc,
+                -10px -10px 20px #27d1ddff;
+            width: 300px;
+            text-align: center;
+
+            transition: 0.3s;
+        }
+
+        .container:hover{
+            transform: translateY(-5px);
+            box-shadow: 
+                15px 15px 25px #27d1ddff,
+                -15px -15px 25px #ffffff;
+        }
+
+        input{
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            box-shadow: 
+                inset 3px 3px 6px #bcbcbc,
+                inset -3px -3px 6px #ffffff;
+            transition: 0.2s;
+        }
+
+        input:hover{
+            transform: scale(1.02);
+        }
+
+        input:focus{
+            outline: none;
+            box-shadow: 
+                inset 2px 2px 5px #bcbcbc,
+                inset -2px -2px 5px #ffffff,
+                0 0 5px #4CAF50;
+        }
+
+        button{
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #27d1ddff;
+            color: white;
+            cursor: pointer;
+            box-shadow: 
+                5px 5px 10px #bcbcbc,
+                -5px -5px 10px #ffffff;
+            transition: 0.2s;
+        }
+
+        button:hover{
+            transform: scale(1.05);
+        }
+
+        button:active{
+            transform: scale(0.97);
+            box-shadow: 
+                inset 5px 5px 10px #bcbcbc,
+                inset -5px -5px 10px #ffffff;
+        }
+
+        .hasil{
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f0f0f0;
+            box-shadow: 
+                inset 3px 3px 6px #bcbcbc,
+                inset -3px -3px 6px #ffffff;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator FPB</h2>
+
+    <form method="POST">
+        <input type="text" name="a" placeholder="Nilai A"
+        value="<?php if(isset($_POST['a'])) echo $_POST['a']; ?>">
+
+        <input type="text" name="b" placeholder="Nilai B"
+        value="<?php if(isset($_POST['b'])) echo $_POST['b']; ?>">
+
+        <br>
+        <button type="submit" name="hitung">Hitung FPB</button>
+    </form>
+
+<?php
+if(isset($_POST['hitung'])){
+
+    $a = $_POST['a'];
+    $b = $_POST['b'];
+
+    if($a !== "" && $b !== ""){
+
+        function fpb($x, $y){
+            while($y != 0){
+                $sisa = $x % $y;
+                $x = $y;
+                $y = $sisa;
+            }
+            return $x;
+        }
+
+        $hasil = fpb($a,$b);
+
+        echo "<div class='hasil'>";
+        echo "Hasil FPB: $hasil <br>";
+
+        if($hasil == 1){
+            echo "Kedua angka RELATIF PRIMA";
+        }else{
+            echo "Kedua angka TIDAK RELATIF PRIMA";
+        }
+
+        echo "</div>";
+    }
+}
+?>
+
+</div>
+
+</body>
+</html>
